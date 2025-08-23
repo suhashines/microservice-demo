@@ -1,0 +1,22 @@
+meta {
+  name: create-category
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE}}/api/v1/products/category
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name":"Compression Wear",
+    "description":"Perfect Body fit compression wears"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,25 @@
+meta {
+  name: create-product
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE}}/api/v1/products
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name":"Cool Flared fashionable jeans",
+    "description":"cool jeans",
+    "price":2095,
+    "quantity":10,
+    "categoryId":2
+  }
+}
+
+settings {
+  encodeUrl: true
+}

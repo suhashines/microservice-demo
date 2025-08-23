@@ -1,0 +1,12 @@
+eureka:  # global default file that will be merged with other configuration files
+  instance:
+    hostname: localhost
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+
+spring:
+  cloud:
+    config:
+      override.system-properties: false
+      # when a service pulls the configuration from the config server, it will not override the system properties of that service

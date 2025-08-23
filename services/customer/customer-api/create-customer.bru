@@ -1,0 +1,27 @@
+meta {
+  name: create-customer
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE}}/api/v1/customers
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "suhas",
+    "email": "suhasabdullah43@gmail.com",
+    "address": {
+      "street": "Kaykobad Road",
+      "houseNumber": 385,
+      "zipCode": 801
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

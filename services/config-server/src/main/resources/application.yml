@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: config-server #unique name of the application under the microservice ecosystem
+    profiles:
+        active: native
+    cloud:
+        config: 
+            server:
+                native:
+                    search-locations: classpath:/configurations
+           # where to search for configuration files , classpath refers to the resources folder where there is a configuration directory
+           # it is also possible to pull config from git or other sources
+
+
+server:
+  port: 8888

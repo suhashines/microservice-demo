@@ -1,0 +1,20 @@
+spring:
+
+    config:
+        import: "optional:configserver:http://localhost:8888"
+    application:
+        name: discovery-service
+    # the discovery service is a client of the config server to fetch configurations, it connects to the config server at port 8888 to fetch its own configurations from the discovery-service.yml file
+
+# eureka:
+#     instance:
+#         hostname: localhost
+#     client:
+#         registerWithEureka: false # the discovery service does not register itself with eureka
+#         fetchRegistry: false
+#         serviceUrl:
+#             defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+# server:
+#     port: 8761 # default port for eureka server
+
+# we will move the above configurations to the config server, so that the discovery service can fetch its configurations from there

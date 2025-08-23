@@ -1,0 +1,11 @@
+spring:
+    data:
+        mongodb:
+            username: customer_user
+            password: customer_pass
+            host: localhost
+            port: 27017
+            database: customer
+            authentication-database: customer #Purpose: Specifies the MongoDB database where user credentials (e.g., mongo/123) are stored for authentication.
+server:
+  port: 8090

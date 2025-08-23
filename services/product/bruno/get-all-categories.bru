@@ -1,0 +1,15 @@
+meta {
+  name: get-all-categories
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{BASE}}/api/v1/products/category
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
