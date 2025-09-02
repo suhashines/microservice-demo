@@ -65,11 +65,33 @@ services:
 
 ```
 
+now connect to the mongo-db container and verify if the user and database is created:
+
+```bash
+docker exec -it ms_mongodb mongosh -u mongo -p 123 --authenticationDatabase admin
+```
+
 but for learning purpose, I connected to the mongo-db container and created the user and database manually.
+
+**verify user-creation**
+
+```bash
+docker exec -it <container_name> mongosh -u <admin_user> -p <admin_password> --authenticationDatabase admin
+
+```
+
+it will open the mongo shell, now run the following commands:
+
+```js   
+use customer;
+db.getUsers()
+```
+
+you should see the customer_user in the list of users.
 
 ## Product-Service Implementation
 
-1. Connected with the container using intellij's Database tool
+1. Connected with the postgres container using intellij's Database tool
 2. Created a database named product with username and password
 3. created a product-service.yml file in the config server to connect to the product database
 4. pulled the properties from the config server in the product-service
@@ -80,3 +102,8 @@ The following exception handling mechanism is implemented in both customer-servi
 
 1. create a custom exception class that extends Runtime Exception, i.e. `EntityNotFoundException`
 2. create a global exception handler class that uses `@RestControllerAdvice annotation`. Don't forget to handle `MethodArgumentNotValidException` for validation errors.
+
+# Order Service Implementation
+
+step 1 to 4 is similar to product-service implementation. The only difference is that order-service will communicate with customer-service and product-service to get the customer and product details using open feign. It will also use kafka to send order events to the notification-service.
+

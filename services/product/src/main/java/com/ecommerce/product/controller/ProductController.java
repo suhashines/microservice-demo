@@ -1,17 +1,16 @@
 package com.ecommerce.product.controller;
 
-import com.ecommerce.product.dto.CategoryResponseDto;
-import com.ecommerce.product.dto.CreateCategoryDto;
-import com.ecommerce.product.dto.CreateProductDto;
-import com.ecommerce.product.dto.ProductResponseDto;
+import com.ecommerce.product.dto.*;
 import com.ecommerce.product.entity.Category;
 import com.ecommerce.product.entity.Product;
 import com.ecommerce.product.service.ProductService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,11 +39,18 @@ public class ProductController {
     public ResponseEntity<List<CategoryResponseDto>> getAllCategories(){
         return ResponseEntity.ok(productService.getAllCategories());
     }
+    @PostMapping("/purchase")
+    public ResponseEntity<List<ProductResponseDto>> purchaseProduct(@RequestBody @Valid List<OrderLineDto> dto){
+
+        return ResponseEntity.ok(productService.purchaseProducts(dto));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer id){
         return ResponseEntity.ok(productService.getProductById(id));
     }
+
+
 
 
 }

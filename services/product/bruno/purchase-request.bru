@@ -1,0 +1,28 @@
+meta {
+  name: purchase-request
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{BASE}}/api/v1/products/purchase
+  body: json
+  auth: inherit
+}
+
+body:json {
+  [
+    {
+      "productId": 1,
+      "quantity": 2
+    },
+    {
+      "productId": 2,
+      "quantity": 1
+    }
+  ]
+}
+
+settings {
+  encodeUrl: true
+}

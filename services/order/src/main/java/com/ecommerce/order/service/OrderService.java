@@ -1,0 +1,79 @@
+package com.ecommerce.order.service;
+
+import com.ecommerce.order.customer.CustomerClient;
+import com.ecommerce.order.dto.*;
+import com.ecommerce.order.entity.Order;
+import com.ecommerce.order.exception.BusinessException;
+import com.ecommerce.order.exception.OrderNotFoundException;
+import com.ecommerce.order.kafka.OrderConfirmation;
+import com.ecommerce.order.kafka.OrderProducer;
+import com.ecommerce.order.mapper.OrderMapper;
+import com.ecommerce.order.payment.PaymentClient;
+import com.ecommerce.order.product.ProductClient;
+import com.ecommerce.order.repository.OrderRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class OrderService {
+    private final OrderRepository orderRepository;
+    private final CustomerClient customerClient;
+    private final ProductClient productClient;
+    private final PaymentClient paymentClient;
+
+    private final OrderMapper orderMapper;
+    private final OrderProducer orderProducer;
+
+    @Transactional
+    public Integer createOrder(OrderRequestDto orderRequestDto) {
+        //fetch the customer -> customer-service
+        CustomerResponseDto customer = customerClient.getCustomerById(orderRequestDto.customerId());
+        
+        //fetch the products -> product-service
+        List<ProductResponseDto> products = productClient.checkProductValidity(orderRequestDto.products());
+
+       BigDecimal totalPrice = BigDecimal.valueOf(0.0);
+        //calculate totalPrice from products
+
+        for(ProductResponseDto product : products) {
+            totalPrice = totalPrice.add(product.price());
+        }
+
+        //persist the order
+        Order savedOrder = orderRepository.save(orderMapper.toOrder(orderRequestDto,totalPrice));
+
+        // todo start payment process
+
+        PaymentResponseDto paymentResponse = paymentClient.createPayment(
+                new PaymentRequestDto(
+                        orderRequestDto.paymentMethod(),orderRequestDto.totalPrice(), savedOrder.getId(),customer
+                )
+        );
+
+        //send the order confirmation
+
+        orderProducer.sendOrderConfirmation(
+                new OrderConfirmation(savedOrder.getId(),totalPrice,orderRequestDto.paymentMethod(),customer,products)
+                //this object must be serialized,the key and value serializer are configured in order-service.yml
+        );
+
+        return savedOrder.getId();
+    }
+
+    public List<OrderResponseDto> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return orderMapper.toOrderResponseDtoList(orders);
+    }
+
+    public OrderResponseDto getOrderById(Integer id) {
+        Order order = orderRepository.findById(id).orElseThrow(
+                () -> new OrderNotFoundException("Order not found")
+        );
+        return orderMapper.toOrderResponseDto(order);
+    }
+}

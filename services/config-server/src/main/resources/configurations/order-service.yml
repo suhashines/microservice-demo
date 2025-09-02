@@ -4,6 +4,13 @@ spring:
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: orderConfirmation:com.ecommerce.order.kafka.OrderConfirmation
   jpa:
     hibernate:
       ddl-auto: create
@@ -23,7 +30,9 @@ server:
 application:
   config:
     customer-url: http://localhost:8222/api/v1/customers
-    product-url: http://localhost:8222/api/v1/products #this is the address of api-gateway
+    product-url: http://localhost:8222/api/v1/products
+    payment-url: http://localhost:8222/api/v1/payments
+    #this is the address of api-gateway
     # why use api-gateway?
     # we might have to run multiple instances of product-service for load balancing and fault tolerance,then api-gateway
     # will route the request to one of the instances of product-service
