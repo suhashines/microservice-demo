@@ -43,7 +43,7 @@ services:
     networks:
       - microservices-net
 
-  mail-dev:
+  mail-dev: # a dummy smtp server for development and testing
     container_name: ms_mail_dev
     image: maildev/maildev
     ports:

@@ -1,10 +1,18 @@
 package com.ecommerce.order.dto;
 
+import lombok.Builder;
+import lombok.Data;
+
 import java.math.BigDecimal;
 
-public record ProductResponseDto(
-        Integer id,
-        String name,
-        BigDecimal price
-) {
+
+@Data
+@Builder
+public class ProductResponseDto{
+    Integer id ;
+    String name;
+    BigDecimal price;
+    Double quantity;
 }
+
+

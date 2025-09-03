@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -33,15 +34,25 @@ public class OrderService {
     public Integer createOrder(OrderRequestDto orderRequestDto) {
         //fetch the customer -> customer-service
         CustomerResponseDto customer = customerClient.getCustomerById(orderRequestDto.customerId());
+
+        HashMap<Integer,Double> orderLineMap = new HashMap<>();
+
+        orderRequestDto.products().forEach(product -> orderLineMap.put(product.id(), product.quantity()));
         
         //fetch the products -> product-service
         List<ProductResponseDto> products = productClient.checkProductValidity(orderRequestDto.products());
+
+        // inject the quantity of each product
+
+        products.forEach(product -> {
+            product.setQuantity(orderLineMap.get(product.getId()));
+        });
 
        BigDecimal totalPrice = BigDecimal.valueOf(0.0);
         //calculate totalPrice from products
 
         for(ProductResponseDto product : products) {
-            totalPrice = totalPrice.add(product.price());
+            totalPrice = totalPrice.add(product.getPrice());
         }
 
         //persist the order
