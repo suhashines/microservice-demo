@@ -1,0 +1,32 @@
+meta {
+  name: create-order
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE}}/api/v1/orders
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "customerId":"68b93631def99c265e599f14",
+    "paymentMethod":"BKASH",
+    "products":[
+    {
+    "productId":1,
+    "quantity":2
+  },
+  {
+    "productId":2,
+    "quantity":2
+  }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

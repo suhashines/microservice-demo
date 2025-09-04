@@ -36,3 +36,11 @@ application:
     # why use api-gateway?
     # we might have to run multiple instances of product-service for load balancing and fault tolerance,then api-gateway
     # will route the request to one of the instances of product-service
+
+# enable logging for debugging
+logging:
+  level:
+    com.ecommerce.order.product.ProductClient: DEBUG
+    com.ecommerce.order.customer.CustomerClient: DEBUG
+    com.ecommerce.order.payment.PaymentClient: DEBUG
+    org.springframework.cloud.openfeign: DEBUG

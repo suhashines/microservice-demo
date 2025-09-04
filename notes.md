@@ -107,3 +107,10 @@ The following exception handling mechanism is implemented in both customer-servi
 
 step 1 to 4 is similar to product-service implementation. The only difference is that order-service will communicate with customer-service and product-service to get the customer and product details using open feign. It will also use kafka to send order events to the notification-service.
 
+### Important thing to remember about kafka
+
+- If producer writes a topic of classname `PaymentConfirmation` the consumer must consume an object of a class with exactly the same name and fields. Or if the consumer wishes to use a different name, it must map those properties accordingly.
+
+# API-GATEWAY Implementation
+
+We need `spring-cloud-starter-gateway` dependency to create an api-gateway. The api-gateway will route the requests to the appropriate microservice based on the path. For example, if the request is for /customers, it will be routed to customer-service.

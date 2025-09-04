@@ -13,12 +13,14 @@ import com.ecommerce.order.product.ProductClient;
 import com.ecommerce.order.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -48,6 +50,8 @@ public class OrderService {
             product.setQuantity(orderLineMap.get(product.getId()));
         });
 
+        log.info("quantity injected in products: {} ",products);
+
        BigDecimal totalPrice = BigDecimal.valueOf(0.0);
         //calculate totalPrice from products
 
@@ -62,7 +66,7 @@ public class OrderService {
 
         PaymentResponseDto paymentResponse = paymentClient.createPayment(
                 new PaymentRequestDto(
-                        orderRequestDto.paymentMethod(),orderRequestDto.totalPrice(), savedOrder.getId(),customer
+                        orderRequestDto.paymentMethod(),totalPrice, savedOrder.getId(),customer
                 )
         );
 

@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class PaymentProducer {
-    private final KafkaTemplate<String, PaymentConfirmationTopic> kafkaTemplate;
+    private final KafkaTemplate<String, PaymentConfirmation> kafkaTemplate;
 
-    public void sendPaymentConfirmation (PaymentConfirmationTopic paymentConfirmationTopic) {
+    public void sendPaymentConfirmation (PaymentConfirmation paymentConfirmationTopic) {
         log.info("Sending payment confirmation: {}", paymentConfirmationTopic);
-        Message<PaymentConfirmationTopic> message = MessageBuilder.withPayload(paymentConfirmationTopic).setHeader(KafkaHeaders.TOPIC,"payment-topic").build();
+        Message<PaymentConfirmation> message = MessageBuilder.withPayload(paymentConfirmationTopic).setHeader(KafkaHeaders.TOPIC,"payment-topic").build();
         kafkaTemplate.send(message);
         log.info("Payment confirmation sent: {}", paymentConfirmationTopic);
     }

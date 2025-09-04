@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Positive;
 
 public record OrderLineDto(
 
+        // do not provide this field in request
         Integer id,
         @NotNull
         @Positive

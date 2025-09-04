@@ -3,7 +3,7 @@ package com.ecommerce.payment.service;
 import com.ecommerce.payment.dto.PaymentCreateDto;
 import com.ecommerce.payment.dto.PaymentResponseDto;
 import com.ecommerce.payment.entity.Payment;
-import com.ecommerce.payment.kafka.PaymentConfirmationTopic;
+import com.ecommerce.payment.kafka.PaymentConfirmation;
 import com.ecommerce.payment.kafka.PaymentProducer;
 import com.ecommerce.payment.mapper.PaymentMapper;
 import com.ecommerce.payment.repository.PaymentRepository;
@@ -24,7 +24,7 @@ public class PaymentService {
         Payment savedPayment = paymentRepository.save(paymentMapper.toPayment(paymentCreateDto));
         // todo inform notification service that payment has been received
         paymentProducer.sendPaymentConfirmation(
-                new PaymentConfirmationTopic(
+                new PaymentConfirmation(
                         savedPayment.getId(),
                         paymentCreateDto.orderId(),
                         paymentCreateDto.customer().name(),

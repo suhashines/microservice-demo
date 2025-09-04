@@ -10,7 +10,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: paymentConfirmationTopic:com.ecommerce.payment.kafka.PaymentConfirmationTopic.java
+        spring.json.type.mapping: paymentConfirmation:com.ecommerce.payment.kafka.PaymentConfirmation
   jpa:
     hibernate:
       ddl-auto: create

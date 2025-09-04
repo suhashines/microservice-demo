@@ -1,11 +1,10 @@
 package com.ecommerce.payment.kafka;
 
-import com.ecommerce.payment.dto.Customer;
 import com.ecommerce.payment.entity.PaymentMethod;
 
 import java.math.BigDecimal;
 
-public record PaymentConfirmationTopic(
+public record PaymentConfirmation(
         Integer paymentId,
         Integer orderId,
         String customerName,
