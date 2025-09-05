@@ -118,6 +118,7 @@ We need `spring-cloud-starter-gateway` dependency to create an api-gateway. The 
 
 # Distributed Tracing
 
-We'll set up and configure `Zipkin` for this purpose.
+To set up and configure `Zipkin` follow these steps:
 
 1. add the Zipkin dependency to each microservice
+2. configure the zipkin properties in the `application.yml` file of config-server so that all microservices can pull the configuration from config-server.
