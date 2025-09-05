@@ -39,8 +39,9 @@ public class OrderService {
 
         HashMap<Integer,Double> orderLineMap = new HashMap<>();
 
-        orderRequestDto.products().forEach(product -> orderLineMap.put(product.id(), product.quantity()));
-        
+        orderRequestDto.products().forEach(product -> orderLineMap.put(product.productId(), product.quantity()));
+
+        log.info("orderLineMap: {}", orderLineMap);
         //fetch the products -> product-service
         List<ProductResponseDto> products = productClient.checkProductValidity(orderRequestDto.products());
 
@@ -89,6 +90,8 @@ public class OrderService {
         Order order = orderRepository.findById(id).orElseThrow(
                 () -> new OrderNotFoundException("Order not found")
         );
+
+        log.info("order: {}", order);
         return orderMapper.toOrderResponseDto(order);
     }
 }

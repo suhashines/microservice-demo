@@ -25,6 +25,7 @@ public class Order {
     private PaymentMethod paymentMethod;
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     //using cascadeType.ALL will create the orderLines object automatically while creating an order
+    // by default lazy fetching is used. remember that fetch type eager will stop lazy initialization and fetch all the `N` order lines object under a single order by querying the database N times, creating the classical N+1 query issues
     private List<OrderLine> orderLines ;
 
 }

@@ -13,7 +13,7 @@ spring:
         spring.json.type.mapping: paymentConfirmation:com.ecommerce.payment.kafka.PaymentConfirmation
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate # once the tables are created,change this to validate, if you want to create tables automatically change this to create
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 #  flyway:

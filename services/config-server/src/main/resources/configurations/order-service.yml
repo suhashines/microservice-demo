@@ -13,7 +13,7 @@ spring:
         spring.json.type.mapping: orderConfirmation:com.ecommerce.order.kafka.OrderConfirmation
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate # once the tables are created,change this to validate
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 #  flyway:
