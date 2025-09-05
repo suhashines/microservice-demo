@@ -1,4 +1,4 @@
-# Microservice with Springboot, Kafka, Keycloak
+# Microservice with Springboot, Kafka, OpenFeign and Keycloak
 
 ### Domain-Driven Design
 
@@ -114,3 +114,9 @@ step 1 to 4 is similar to product-service implementation. The only difference is
 # API-GATEWAY Implementation
 
 We need `spring-cloud-starter-gateway` dependency to create an api-gateway. The api-gateway will route the requests to the appropriate microservice based on the path. For example, if the request is for /customers, it will be routed to customer-service.
+
+# Distributed Tracing
+
+We'll set up and configure `Zipkin` for this purpose.
+
+1. add the Zipkin dependency to each microservice

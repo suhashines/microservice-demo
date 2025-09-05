@@ -23,3 +23,10 @@ public class KafkaOrderTopic {
 }
 
 ```
+
+## Hibernate
+
+For creating tables automatically we use `ddl-auto` property in the application.properties file. The possible values are:
+- `none`: No action will be performed.  
+- 'validate': Hibernate will validate the schema, making sure it matches the entities. If there are discrepancies, an exception will be thrown.
+- `update`: Hibernate will update the database schema to match the entities. This can include adding new tables, columns, and constraints, but it won't remove any existing tables or columns.
