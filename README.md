@@ -122,3 +122,18 @@ To set up and configure `Zipkin` follow these steps:
 
 1. add the Zipkin dependency to each microservice
 2. configure the zipkin properties in the `application.yml` file of config-server so that all microservices can pull the configuration from config-server.
+
+## Setting up keycloak
+The api gateway will handle the authentication and authorization using keycloak. The api-gateway will validate the token and route the request to the appropriate microservice.
+
+1. add the dependency `Oauth2 Resource Server` to the api-gateway
+2. create a bean of type `SecurityWebFilterChain` to configure the security of the api-gateway.
+3. create a realm `micro-services` in keycloak
+4. create a client `micro-services-api` in the realm with authentication and authorization enabled.
+5. before making a request to the api-gateway the client must obtain a token from keycloak using the client id and client secret. Follow these steps -
+    - from auth select `OAuth2`
+    - select `Client Credentials` from the grant type dropdown
+    - enter the client id and client secret
+    - in access token url enter `http://localhost:9090/realms/micro-services/protocol/openid-connect/token`
+    - click on `get new access token`
+6. now send the request to the api-gateway with the token in the authorization header.
